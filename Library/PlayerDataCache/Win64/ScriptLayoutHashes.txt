@@ -1,6 +1,6 @@
 Win64
 PlayerPath?
-C:/Users/adm/Documents/Projects/IC/Games/ChasingPlanes_Unity3D-master/Build/Chasing planes.exe
+C:/Users/adm/Documents/Projects/IC/Games/ChasingPlanes_Unity3D-master/Chasing planes.exe
 SceneListBegin?
 Assets/Scenes/Main.unity
 SceneListEnd?
