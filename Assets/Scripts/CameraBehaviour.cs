@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 using System.IO;
 using Events;
 
@@ -25,10 +26,8 @@ public class CameraBehaviour : MonoBehaviour {
 	private static string currentTime;
 	Log Log = new Log();
 
-
 	// Use this for initialization
 	void Start () {
-
 		counter++;
 		Log.Write(c1, c2, c3);
 

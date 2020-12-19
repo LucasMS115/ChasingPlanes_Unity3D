@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using System.IO;
 using Events;
@@ -10,19 +11,25 @@ public class MissileBehaviour : MonoBehaviour {
 	Rigidbody2D rb;
 	public Transform target;
 	public GameObject dust;
-	public GameObject explosionEffect; 
+	public GameObject explosionEffect;
+	 
 	public float speed = 6f, rotationSpeed = 120f, dustWait = .05f;
 
 	//Log Variables
 	private string currentTime;
 	private static int colisionCounter;
+	private static int hpCounter = 3;
 	private static bool gameOver = false;
+	public Text score;
+	public Text hp;
 	Log Log = new Log();
 
 	// Use this for initialization
 	void Start () {
 
 		gameOver = false;
+		score = GameObject.Find("Score").GetComponent<UnityEngine.UI.Text>();
+		hp = GameObject.Find("HP").GetComponent<UnityEngine.UI.Text>();
 
 		rb = GetComponent<Rigidbody2D>();
 		StartCoroutine(makingDust());
@@ -49,14 +56,22 @@ public class MissileBehaviour : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 
 		string tag = other.gameObject.tag;
-		if(tag.Equals("plane")){
+		if(tag.Equals("plane") && !gameOver){
 
-			gameOver = true;
-			colisionCounter = 0;
-
-			blowUpPlane(other.gameObject.transform);
+			hpCounter--;
+			hp.text = "HP: " + hpCounter; 
+			blowUpSelf();
+			Log.Write("HPD", hpCounter.ToString(), currentTime);
+			
+			if(hpCounter < 1){
+				gameOver = true;
+				hpCounter = 3;
+				colisionCounter = 0;
+				blowUpPlane(other.gameObject.transform);
+			}
 		}
 		if(tag.Equals("missile")){
+			score.text = "Score: " + colisionCounter; 
 			blowUpSelf();
 		}
 	}

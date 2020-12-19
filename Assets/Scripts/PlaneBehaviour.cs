@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using System.IO;
 using Events;
@@ -18,12 +19,17 @@ public class PlaneBehaviour : MonoBehaviour {
 
 	private static string currentTime;
 	private static int counter = 0;
+	private float runTimeCounter = 0;
 	private string pressed = "N"; // N = neutral, L = left, R = Right
 	Log Log = new Log();
 
+	public Text runTime;
 
 	// Use this for initialization
 	void Start () {
+
+		runTime = GameObject.Find("Time").GetComponent<UnityEngine.UI.Text>();
+
 		counter++;
 		if(cam == null) cam = Camera.main;
 		rb = GetComponent<Rigidbody2D>();
@@ -31,6 +37,8 @@ public class PlaneBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		runTimeCounter += Time.deltaTime;
+		runTime.text = "  Time: " + runTimeCounter.ToString("f1");
 		if(!isGameOver){
 			movePlane();
 			rotatePlane(Input.GetAxis("Horizontal"));
@@ -91,7 +99,10 @@ public class PlaneBehaviour : MonoBehaviour {
 
 		/* AQUI */
 		currentTime = Time.time.ToString("f5");       	
-		if(!isGameOver)Log.Write("GO", counter.ToString(), currentTime);
+		if(!isGameOver){
+			Log.Write("GO", counter.ToString(), currentTime);
+			Log.Write("RT", runTimeCounter.ToString(), Time.time.ToString("f5"));
+		}
 		/* AQUI */
 
 		GetComponentInChildren<SpriteRenderer>().enabled = false;

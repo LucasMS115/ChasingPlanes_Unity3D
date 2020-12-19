@@ -17,7 +17,8 @@ namespace Events{
         {
             { "EVENT", data[0] },
             { "VALUE", data[1] },
-            { "TIME", data[2] }
+            { "TIME", data[2] },
+            {"GAME", "ChasingPlanes"}
         };
 
         var content = new FormUrlEncodedContent(values);
